@@ -1,0 +1,28 @@
+@AuthUser
+
+HandlerMethodArgumentResolver
+
+/src/main/java
+     	|	
+     	|-kr.co.itcen.springcontainer.user
+	|-kr.co.itcen.springcontainer.soundsystem
+		|-CompactDisc.java
+		|-HighSchoolRapper2Final.java	
+	|-kr.co.itcen.springcontainer.videosystem
+	|-kr.co.itcen.springcontainer.test
+		|-ContainerTest.java
+		|-
+	|-config.user
+		|-UserConfig.java
+	|-config.soundsystem
+	|-config.videosystem
+
+
+/src/main/resources
+	|-config.user
+		|-applicationContext01.xml(Annotation Scanning)
+		|-applicationContext02.xml(Bean Configuration)
+		
+/src/test/java
+	|-kr.co.itcen.springcontainer.soundsystem.HighSchoolRapper3Final.java
+/src/test/resources

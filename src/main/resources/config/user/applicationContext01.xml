@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	<context:annotation-config />
+	
+	<bean id="user1" class="kr.co.itcen.springcontainer.user.User" />
+	<bean id="user2" name="usr2" class="kr.co.itcen.springcontainer.user.User" />
+	<bean id="user3" class="kr.co.itcen.springcontainer.user.User">
+		<constructor-arg index="1" value="태영" /> 
+		<constructor-arg index="0" value="3"  /> 	
+	</bean>
+	<bean id="user4" class="kr.co.itcen.springcontainer.user.User">
+		<property name="no" value="4" />
+		<property name="name" value="안태영이" />
+	</bean>
+	
+	<bean id="user5" class="kr.co.itcen.springcontainer.user.User">
+		<property name="no" value="5" />
+		<property name="name" value="마이콜" />
+		<!-- DI 자동 주입 -->
+		<property name="friend" ref="friend1" />
+	</bean>
+
+	<bean id="friend1" class="kr.co.itcen.springcontainer.user.Friend">
+		<constructor-arg value="희동이" />
+	</bean>
+	
+	<bean id="user6" class="kr.co.itcen.springcontainer.user.User">
+		<property name="no" value="6" />
+		<property name="name" value="둘리" />
+		<property name="friend">
+			<!-- 밖에서 사용하지 않을 빈 -->
+			<bean class="kr.co.itcen.springcontainer.user.Friend" >
+				<constructor-arg value="길동" />
+			</bean>
+		</property>
+		<property name="friends">
+			<list>
+				<value>또치</value>
+				<value>도우넛</value>
+				<value>마이콜</value>
+				<value>희동</value>
+			</list>
+		</property>
+	</bean>
+</beans>
