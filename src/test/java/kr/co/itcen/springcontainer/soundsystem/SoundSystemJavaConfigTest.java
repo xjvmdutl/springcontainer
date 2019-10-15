@@ -3,7 +3,6 @@ package kr.co.itcen.springcontainer.soundsystem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
@@ -12,36 +11,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import kr.co.itcen.springcontainer.config.soundsystem.SoundSystemConfig;
 /*
- * Auto Configuration - xml Config(Annotation Scan)
- * 
+ * Auto Configuration - java Config
  * Component Scanning(@Component,@Named,@Autowired,@Inject
  * 						@Service ->3가지는 스프링 MVC에 적용이 된다.
  * 						@Controller
  * 						@Repository)
  * 
  */
-
+//본래에는 원래 Test부터 만들어 주어야 한다.
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:config/soundsystem/SoundSystemConfig.xml"})
-public class SoundSystemXmlConfigTest {
-	@Rule
-	public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+@ContextConfiguration(classes = {SoundSystemConfig.class})
+public class SoundSystemJavaConfigTest {
 	@Autowired
-	@Qualifier("highSchoolRapper3Final")
-	private CompactDisc cd;//실제로는 주입받을 필요가 없다 ->왜냐하면 이미 cdPlay에 주입되어 있기 때문
+	@Qualifier("high3")
+	private CompactDisc cd;
 	@Autowired
 	private CDPlayer cdPlayer;
-	
+	@Rule
+	public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
 	@Test
 	public void testCDNull() {
 		assertNotNull(cd);
 	}
 	@Test
-	public void testCDPlayer() {
+	public void testCDPlayerNull() {
 		assertNotNull(cdPlayer);
 	}
-	//@Ignore이렇게 할시 테스트를 안함
 	@Test
 	public void testPlay() {
 		cdPlayer.play();

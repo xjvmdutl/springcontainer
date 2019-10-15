@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	<!-- 01. 간단한 빈 설정 -->
+	<bean class="kr.co.itcen.springcontainer.videosystem.Avengers" />
+	<!-- 02. 설정된 빈에 아이디 부여하기-->
+	<bean id="ironMan" class="kr.co.itcen.springcontainer.videosystem.IronMan" />
+	<!-- 03. 생성자를 통한 빈 주입-->
+	<bean id="Player1" class="kr.co.itcen.springcontainer.videosystem.DVDPlayer" >
+		<constructor-arg ref="ironMan"/>
+	</bean>
+	<!-- 04. 생성자를 통한 빈 주입2: c-namespace의 argument name 사용-->
+	<bean id="Player2" 
+		class="kr.co.itcen.springcontainer.videosystem.DVDPlayer" 
+		c:dvd-ref="ironMan"
+	/>
+	<!-- 05. 생성자를 통한 빈 주입3: 
+		c-namespace의 argument name 사용
+	-->
+	<bean id="Player3" 
+		class="kr.co.itcen.springcontainer.videosystem.DVDPlayer" 
+		c:_0-ref="ironMan"
+	/>
+	<!-- 06. 생성자를 통한 빈 주입4: 
+		literal값을 생성자에 주입하는 경우01
+	-->
+	<bean id="avengersInfinityWar" class="kr.co.itcen.springcontainer.videosystem.BlankDisc" >
+		<constructor-arg name = "studio" value="MARVEL"></constructor-arg>
+		<constructor-arg name = "title" value="AvengersInfinityWar"></constructor-arg>
+	</bean>
+	<!-- 07. 생성자를 통한 빈 주입4: 
+		literal값을 생성자에 주입하는 경우02	-->
+	<bean id="avengersEndgame" class="kr.co.itcen.springcontainer.videosystem.BlankDisc" 
+	c:title="Avengers Endgame"
+	c:studio="MARVEL"
+	/>	
+	<!-- 08. 생성자를 통한 빈 주입5: 
+		literal값을 생성자에 주입하는 경우02	-->
+	<bean id="avengersAgeOfUltron" class="kr.co.itcen.springcontainer.videosystem.BlankDisc" 
+	c:_0="Avengers Age Of Ultron"
+	c:_1="MARVEL"
+	/>		
+	<!-- 09. 생성자를 통한 빈 주입6: 
+		wiring Collection 01-->
+	<bean id="captainAmerica" class="kr.co.itcen.springcontainer.videosystem.BlankDisc">
+		<constructor-arg name = "studio" value="MARVEL"></constructor-arg>
+		<constructor-arg name = "title" value="Captain America"></constructor-arg>
+		<constructor-arg><null /></constructor-arg>
+	</bean>
+		<!-- 10. 생성자를 통한 빈 주입6: 
+		wiring Collection 02-->
+	<bean id="avengersDirectorEdition" class="kr.co.itcen.springcontainer.videosystem.BlankDisc">
+		<constructor-arg name = "studio" value="MARVEL"></constructor-arg>
+		<constructor-arg name = "title" value="Avengers Director's Edition"></constructor-arg>
+		<constructor-arg>
+			<list>
+				<value>Robert Downey Jr.</value>
+				<value>Scarlett Johansson</value>		
+				<value>Chris Evans</value>
+		
+			</list>
+		</constructor-arg>
+	</bean>
+	<!-- 11. 생성자를 통한 빈 주입5: 
+		wiring Collection 03-->
+	<bean id="avengersTriplePack" class="kr.co.itcen.springcontainer.videosystem.DVDPack">
+		<constructor-arg name = "studio" value="MARVEL"></constructor-arg>
+		<constructor-arg name = "title" value="Avengers TriplePack"></constructor-arg>
+		<constructor-arg>
+			<list>
+				<ref bean="avengersInfinityWar"/>
+				<ref bean="avengersAgeOfUltron"/>
+				<ref bean="avengersEndgame"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	<!-- 12. 프로퍼티를 통한 빈 주입 1: -->
+	<bean id="Player4" class="kr.co.itcen.springcontainer.videosystem.DVDPlayer" >
+		<property name="dvd" ref="avengersDirectorEdition"/>
+	</bean>
+	<!-- 13. 프로퍼티를 통한 빈 주입 2: -->
+	<bean id="Player5" class="kr.co.itcen.springcontainer.videosystem.DVDPlayer"
+		p:dvd-ref="captainAmerica" />
+	<!-- 14. 프로퍼티를 통한 빈 주입 3: -->
+	<bean id="avengersExpansionPack" class="kr.co.itcen.springcontainer.videosystem.BlankDisc" >
+		<property name="title" value="Avengers Expansion Pack" />
+		<property name="studio" value="MARVEL"/>
+		<property name="actors">
+			<list>
+				<value>Robert Downey Jr.</value>
+				<value>Scarlett Johansson</value>		
+				<value>Chris Evans</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 15. 프로퍼티를 통한 빈 주입 4: -->
+	<util:list id="actorList">
+		<value>Robert Downey Jr.</value>
+		<value>Scarlett Johansson</value>
+		<value>Chris Evans</value>
+	</util:list>
+	<bean id="avengersExpansionPack2" class="kr.co.itcen.springcontainer.videosystem.BlankDisc" 
+	p:title="Avengers Expansion Pack2"
+	p:studio="MARVEL"
+	p:actors-ref="actorList"/>
+</beans>
